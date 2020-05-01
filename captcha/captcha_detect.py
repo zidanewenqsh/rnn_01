@@ -163,6 +163,7 @@ class Detector(nn.Module):
         with torch.no_grad():
             self.net.eval()
             output = self.net(img_)
+            output = nn.Softmax(dim=-1)(output) # 注意这个softmax，其实可以不加
             out = torch.argmax(output.detach().cpu(),dim=-1)
             # print(out.numpy().tolist()[0])
             # print(["".join(out.numpy().tolist()[0])])
@@ -199,4 +200,5 @@ if __name__ == '__main__':
         break
     detector = Detector()
     detector(r"D:\PycharmProjects\rnn_01\datas\captcha_img_test\0073.jpg")
+    detector.get_accruacy()
 
